@@ -1,27 +1,25 @@
-const fs = require("fs");
+const fs = require('fs');
 
-const FILE_PARCELS = "Fichier1.txt";
-const FILE_NUMBER_PARCEL = "Fichier2.txt";
+const FILE_PARCELS = 'Fichier1.txt';
+const FILE_NUMBER_PARCEL = 'Fichier2.txt';
 const parcel = new Map();
-const trackParcels = () => fs.readFileSync(FILE_PARCELS, "utf8");
 
-const datas = trackParcels().split("\n");
+const readContentAndRemoveCarriage = (file) => fs.readFileSync(file, 'utf8').split('\n');
 
-const fake = datas.flatMap((bee) => bee.split(":"));
+const fake = readContentAndRemoveCarriage(FILE_PARCELS).flatMap( bee => bee.split(':'));
+const realParcels = readContentAndRemoveCarriage(FILE_NUMBER_PARCEL).flatMap( bee => bee.split(':'));
+
 for (let i = 1; i < fake.length; i++) {
-    if (i % 2 !== 0) {
-        parcel.set(fake[i - 1], fake[i]);
-    }
+  if (i % 2 !== 0) {
+    parcel.set(fake[i - 1], fake[i]);
+  }
 }
 
-const trackNumbersOfParcel = () => fs.readFileSync(FILE_NUMBER_PARCEL, "utf8");
-
-const keys = trackNumbersOfParcel().split("\n");
 const keyMap = parcel.keys();
 
 for (const k of keyMap) {
-    const isThere = keys.includes(k);
-    if (!isThere) {
-        console.log(parcel.get(k));
-    }
+  const isThere = realParcels.includes(k);
+  if (!isThere) {
+    console.log(parcel.get(k));
+  }
 }
