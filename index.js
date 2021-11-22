@@ -15,9 +15,7 @@ for (let i = 1; i < fake.length; i++) {
   }
 }
 
-const keyMap = parcel.keys();
-
-for (const k of keyMap) {
+for (const k of parcel.keys()) {
   if (!realParcels.includes(k)) {
     console.log(parcel.get(k));
   }
